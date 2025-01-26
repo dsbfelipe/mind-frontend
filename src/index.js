@@ -1,3 +1,6 @@
+import { displayLoginPage } from "./components/login";
 import "./style.css";
 
-const body = document.getElementById("body");
+const content = document.getElementById("content");
+
+displayLoginPage(content);
