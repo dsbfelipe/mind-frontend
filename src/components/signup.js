@@ -1,6 +1,7 @@
 import { displayLoginPage } from "./login";
 import { displayProductsPage } from "./productsPage";
 import { createUser } from "../utils/requests";
+import { getUserData } from "../utils/requests";
 
 function createSignupPage() {
   return `
@@ -63,7 +64,7 @@ export function displaySignupPage(parent) {
     try {
       await createUser(newUserData);
 
-      const currentUserData = await getUserData(newUserUsername);
+      const currentUserData = await getUserData(newUserEmail);
       localStorage.setItem("currentUser", JSON.stringify(currentUserData));
       displayProductsPage(parent, currentUserData);
     } catch (error) {

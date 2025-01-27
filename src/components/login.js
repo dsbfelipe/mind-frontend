@@ -1,6 +1,7 @@
 import { displaySignupPage } from "./signup";
 import { login } from "../utils/requests";
 import { displayProductsPage } from "./productsPage";
+import { getUserData } from "../utils/requests";
 
 function createLoginPage() {
   return `
@@ -38,6 +39,9 @@ export function displayLoginPage(parent) {
   parent.innerHTML = "";
   parent.innerHTML = createLoginPage();
 
+  // Limpar o token sempre que a tela de login for carregada
+  localStorage.removeItem("authToken");
+
   const goToSignupButton = document.getElementById("go-signup-button");
   const loginButton = document.getElementById("login-button");
   const emailInput = document.getElementById("email-login");
@@ -61,7 +65,8 @@ export function displayLoginPage(parent) {
       password: userPassword,
     };
 
-    console.log("oi");
+    loginButton.disabled = true;
+    loginButton.textContent = "Aguarde...";
 
     try {
       const response = await login(userObject);
@@ -77,6 +82,9 @@ export function displayLoginPage(parent) {
       }
     } catch (error) {
       console.error("Login failed:", error);
+    } finally {
+      loginButton.textContent = "Login";
+      loginButton.disabled = false;
     }
   });
 }
