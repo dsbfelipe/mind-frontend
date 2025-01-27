@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Estoque</title>
-  </head>
-  <body id="content">
-    <div id="products-page">
+function createProductsPage() {
+  return `
+        <div id="products-page">
       <header>
         <h3>Seja bem vindo, Fulano</h3>
         <h1>Gerenciador de estoque</h1>
@@ -32,5 +26,10 @@
         </div>
       </main>
     </div>
-  </body>
-</html>
+  `;
+}
+
+export function displayProductsPage(parent) {
+  parent.innerHTML = "";
+  parent.innerHTML = createProductsPage();
+}

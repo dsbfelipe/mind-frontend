@@ -37,5 +37,14 @@ export function displayLoginPage(parent) {
   parent.innerHTML = createLoginPage();
 
   const goToSignupButton = document.getElementById("go-signup-button");
+  const loginButton = document.getElementById("login-button");
+  const emailInput = document.getElementById("email-login");
+  const passwordInput = document.getElementById("password-login");
+
   goToSignupButton.addEventListener("click", () => displaySignupPage(parent));
+
+  loginButton.addEventListener("click", () => {
+    const userEmail = emailInput.value;
+    const userPassword = passwordInput.value;
+  });
 }
