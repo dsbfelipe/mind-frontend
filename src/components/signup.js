@@ -61,6 +61,9 @@ export function displaySignupPage(parent) {
       password: newUserPassword,
     };
 
+    signupButton.disabled = true;
+    signupButton.textContent = "Aguarde...";
+
     try {
       await createUser(newUserData);
 
@@ -69,6 +72,9 @@ export function displaySignupPage(parent) {
       displayProductsPage(parent, currentUserData);
     } catch (error) {
       console.error("Error during signup process:", error);
+    } finally {
+      signupButton.disabled = false;
+      signupButton.textContent = "Criar Conta";
     }
   });
 }
