@@ -1,4 +1,6 @@
 import { displayLoginPage } from "./login";
+import { displayProductsPage } from "./productsPage";
+import { createUser } from "../utils/requests";
 
 function createSignupPage() {
   return `
@@ -40,5 +42,32 @@ export function displaySignupPage(parent) {
   parent.innerHTML = createSignupPage();
 
   const goToLoginButton = document.getElementById("go-login-button");
+  const nameInput = document.getElementById("name-signup");
+  const emailInput = document.getElementById("email-signup");
+  const passwordInput = document.getElementById("password-signup");
+  const signupButton = document.getElementById("signup-button");
+
   goToLoginButton.addEventListener("click", () => displayLoginPage(parent));
+
+  signupButton.addEventListener("click", async () => {
+    const newUserName = nameInput.value;
+    const newUserEmail = emailInput.value;
+    const newUserPassword = passwordInput.value;
+
+    const newUserData = {
+      name: newUserName,
+      email: newUserEmail,
+      password: newUserPassword,
+    };
+
+    try {
+      await createUser(newUserData);
+
+      const currentUserData = await getUserData(newUserUsername);
+      localStorage.setItem("currentUser", JSON.stringify(currentUserData));
+      displayProductsPage(parent, currentUserData);
+    } catch (error) {
+      console.error("Error during signup process:", error);
+    }
+  });
 }

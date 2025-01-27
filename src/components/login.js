@@ -1,4 +1,6 @@
 import { displaySignupPage } from "./signup";
+import { login } from "../utils/requests";
+import { displayProductsPage } from "./productsPage";
 
 function createLoginPage() {
   return `
@@ -43,8 +45,38 @@ export function displayLoginPage(parent) {
 
   goToSignupButton.addEventListener("click", () => displaySignupPage(parent));
 
-  loginButton.addEventListener("click", () => {
+  loginButton.addEventListener("click", async () => {
+    if (emailInput.value === "") {
+      return;
+    }
+    if (passwordInput.value === "") {
+      return;
+    }
+
     const userEmail = emailInput.value;
     const userPassword = passwordInput.value;
+
+    const userObject = {
+      email: userEmail,
+      password: userPassword,
+    };
+
+    console.log("oi");
+
+    try {
+      const response = await login(userObject);
+      const token = response?.token;
+
+      if (token) {
+        localStorage.setItem("authToken", token);
+        console.log("Token saved to localStorage:", token);
+        const currentUserData = await getUserData(emailInput.value);
+        displayProductsPage(parent, currentUserData);
+      } else {
+        console.error("Token not found in login response");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   });
 }

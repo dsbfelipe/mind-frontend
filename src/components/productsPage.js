@@ -29,7 +29,7 @@ function createProductsPage() {
   `;
 }
 
-export function displayProductsPage(parent) {
+export function displayProductsPage(parent, currentUserData) {
   parent.innerHTML = "";
   parent.innerHTML = createProductsPage();
 }
